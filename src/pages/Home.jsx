@@ -5,7 +5,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaEnvelope } from "react-icons/fa";
 import { apiConnector } from '../api calls/apiConnector';
 import Content from '../components/Content';
 import { useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 export const Home = () => {
   const user = useSelector(state => state.user);
   const categories = [
@@ -38,11 +38,9 @@ export const Home = () => {
       if (!response.data.success) {
         throw new Error(response?.data?.message);
       } else {
-        // console.log(response);
         const productDetail = response.data.products;
         setAllProducts(productDetail);
         localStorage.setItem('products', JSON.stringify(productDetail));
-        // console.log(productDetail?.slice(0,2));
       }
     } catch (error) {
       console.log("ONE PRODUCT API ERROR............", error);
@@ -55,10 +53,10 @@ export const Home = () => {
   useEffect(() => {
     fetchallproduct();
   }, []);
-  // console.log(Object.keys(user).length);
+
   return (
     <div className="font-gilroy">
-      <div className="bg-gradient-to-r from-blue-800 to-purple-800 text-white py-0">
+      <div className="bg-gradient-to-r from-blue-800 to-purple-800 text-white py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col-reverse lg:flex-row gap-8 items-center">
             <div className="lg:w-1/2 text-center lg:text-left">
@@ -66,7 +64,14 @@ export const Home = () => {
               <p className="text-lg mb-8">Discover the latest trends in fashion, electronics, and more!</p>
               <div className="flex justify-center lg:justify-start space-x-4">
                 <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold">Shop Now</button>
-                {Object.keys(user).length <= 0 && <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">Login</button>}
+                 {/*Object.keys(user).length <= 0 && <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">Login</button>*/
+                 Object.keys(user).length <= 0 && (
+                  <Link to="/login">
+                    <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">
+                      Login
+                    </button>
+                  </Link>
+                 )}
               </div>
             </div>
             <div className="lg:w-1/2">
@@ -81,14 +86,14 @@ export const Home = () => {
       </div>
 
       {/* Newsletter */}
-      <section id="newsletter" className="section-p1 flex justify-between items-center px-16 bg-gradient-to-r from-blue-700 to-purple-700 text-white mt-5 mb-20 py-8">
-        <div className="newstext">
+      <section id="newsletter" className="section-p1 flex flex-col md:flex-row justify-between items-center px-4 md:px-16 bg-gradient-to-r from-blue-700 to-purple-700 text-white mt-5 mb-20 py-8">
+        <div className="newstext mb-4 md:mb-0">
           <h4 className="text-2xl font-semibold mb-2">Sign Up for Newsletters</h4>
           <p className="text-lg">Get Email updates about our latest shop and <span className="text-yellow-400">special offers.</span></p>
         </div>
-        <div className="form flex items-center justify-center w-full md:w-2/5">
-          <input type="text" placeholder="Your email address" className="input-newsletter w-2/3 rounded-l-lg px-4 py-2" />
-          <button className="btn-normal ml-2 bg-[#088178] px-4 py-3 text-white rounded-r-lg">Sign Up</button>
+        <div className="form flex flex-col md:flex-row items-center justify-center w-full md:w-2/5">
+          <input type="text" placeholder="Your email address" className="input-newsletter w-full md:w-2/3 rounded-l-lg px-4 py-2 mb-4 md:mb-0" />
+          <button className="btn-normal ml-0 md:ml-2 bg-[#088178] px-4 py-3 text-white rounded-r-lg">Sign Up</button>
         </div>
       </section>
 
@@ -146,5 +151,5 @@ export const Home = () => {
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};

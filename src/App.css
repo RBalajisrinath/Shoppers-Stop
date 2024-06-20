@@ -1,3 +1,121 @@
+/* Tailwind CSS configuration for responsive design */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Additional custom styles */
+
+.font-gilroy {
+  font-family: 'Gilroy', sans-serif;
+}
+
+.section-p1 {
+  padding: 1rem;
+}
+
+/* Input styles for the newsletter */
+.input-newsletter {
+  @apply border border-gray-300 rounded-l-lg px-4 py-2;
+  outline: none;
+  width: 100%;
+}
+
+.input-newsletter:focus {
+  @apply border-blue-500;
+}
+
+/* Button styles */
+.btn-normal {
+  @apply bg-[#088178] text-white px-4 py-3 rounded-r-lg;
+}
+
+.btn-normal:hover {
+  @apply bg-[#065f57];
+}
+
+/* Hero section styles */
+.hero {
+  @apply bg-gradient-to-r from-blue-800 to-purple-800 text-white py-8;
+}
+
+.hero h1 {
+  @apply text-4xl lg:text-6xl font-bold mb-4;
+}
+
+.hero p {
+  @apply text-lg mb-8;
+}
+
+.hero button {
+  @apply bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold;
+}
+
+/* Newsletter styles */
+#newsletter {
+  @apply bg-gradient-to-r from-blue-700 to-purple-700 text-white mt-5 mb-20 py-8;
+}
+
+#newsletter .newstext h4 {
+  @apply text-2xl font-semibold mb-2;
+}
+
+#newsletter .newstext p {
+  @apply text-lg;
+}
+
+#newsletter .newstext span {
+  @apply text-yellow-400;
+}
+
+#newsletter .form {
+  @apply flex flex-col md:flex-row items-center justify-center w-full md:w-2/5;
+}
+
+#newsletter .form input {
+  @apply w-full md:w-2/3 rounded-l-lg px-4 py-2 mb-4 md:mb-0;
+}
+
+#newsletter .form button {
+  @apply ml-0 md:ml-2 bg-[#088178] px-4 py-3 text-white rounded-r-lg;
+}
+
+/* Footer styles */
+footer {
+  @apply bg-gray-900 text-white py-8;
+}
+
+footer .container {
+  @apply mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8;
+}
+
+footer h3 {
+  @apply text-xl font-semibold mb-4;
+}
+
+footer p, footer ul {
+  @apply mb-4;
+}
+
+footer ul li {
+  @apply mb-2;
+}
+
+footer ul li a {
+  @apply hover:text-gray-300 transition duration-300;
+}
+
+footer .flex {
+  @apply flex-col items-center;
+}
+
+footer .flex a {
+  @apply text-xl inline-block transform transition duration-300 hover:scale-110;
+}
+
+footer .mt-8 {
+  @apply text-center;
+}
+
 .App {
   text-align: center;
 }
@@ -69,7 +187,6 @@ label.MuiFormLabel-root{
     z-index: 0;
 }
 
-
 /* show more button */
 /* CSS */
 .button-64 {
@@ -102,20 +219,4 @@ label.MuiFormLabel-root{
     font-size: 24px;
     min-width: 196px;
   }
-}
-
-#newsletter{
-  background-image: url(./assests/images/banner.jpg);
-  height: 120px;
-}
-
-.input-newsletter {
-  height: 3.125rem;
-  font-size: 14px;
-  padding: 0 1.25em;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  outline: none;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
 }

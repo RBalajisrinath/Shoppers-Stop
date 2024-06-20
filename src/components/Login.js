@@ -91,6 +91,7 @@ export default function Login(){
         if(!value) {
             error = 'Value required!'
         } else {
+            // eslint-disable-next-line default-case
             switch(name) {
                 case 'email':
                     if(!validator.isEmail(value)) {
