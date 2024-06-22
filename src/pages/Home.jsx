@@ -6,31 +6,10 @@ import { apiConnector } from '../api calls/apiConnector';
 import Content from '../components/Content';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 export const Home = () => {
   const user = useSelector(state => state.user);
-  const categories = [
-    { id: 1, name: 'Fashion' },
-    { id: 2, name: 'Electronics' },
-    { id: 3, name: 'Books' },
-    { id: 4, name: 'Home & Kitchen' },
-    { id: 5, name: 'Beauty & Personal Care' },
-  ];
-
-  const [allProducts, setAllProducts] = useState([]);
-  const products = [
-    {
-      id: 1,
-      name: 'Product 1',
-      image: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1049&q=80',
-      price: '$19.99',
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      image: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1049&q=80',
-      price: '$29.99',
-    },
-  ];
+  const [, setAllProducts] = useState([]);
 
   const fetchallproduct = async () => {
     try {
@@ -64,14 +43,13 @@ export const Home = () => {
               <p className="text-lg mb-8">Discover the latest trends in fashion, electronics, and more!</p>
               <div className="flex justify-center lg:justify-start space-x-4">
                 <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold">Shop Now</button>
-                 {/*Object.keys(user).length <= 0 && <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">Login</button>*/
-                 Object.keys(user).length <= 0 && (
+                {Object.keys(user).length <= 0 && (
                   <Link to="/login">
                     <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">
                       Login
                     </button>
                   </Link>
-                 )}
+                )}
               </div>
             </div>
             <div className="lg:w-1/2">

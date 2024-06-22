@@ -1,4 +1,4 @@
- import * as React from 'react';
+/* import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -133,5 +133,87 @@ export default function NavigationBar() {
       <Outlet />
     </React.Fragment>
     
+  );
+}*/
+import * as React from 'react';
+import { Link as Anchor, useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import './NavigationBar.css';
+
+const Logo = () => {
+  return (
+    <React.Fragment>
+      <span className="logo-icon">🛒</span>
+      <span className="logo-text">ShopSpot</span>
+    </React.Fragment>
+  );
+};
+
+const SearchBar = (props) => {
+  return props.isLoggedIn ? (
+    <div className="search">
+      <span className="search-icon">🔍</span>
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search…"
+        onInput={(e) => {
+          props.dispatch({ type: 'setSearch', payload: e.currentTarget.value });
+        }}
+      />
+    </div>
+  ) : null;
+};
+
+const Menu = (props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  if (location.pathname === '/login' || location.pathname === '/signup') {
+    return (
+      <div className="menu">
+        <Anchor className="menu-link" to="/login">Login</Anchor>
+        <Anchor className="menu-link" to="/signup">Sign up</Anchor>
+      </div>
+    );
+  }
+  return (
+    <div className="menu">
+      {props.isLoggedIn && <button className="menu-button" onClick={() => { navigate('/'); }}>Home</button>}
+      {props.isAdmin && <button className="menu-button" onClick={() => { navigate('/addproduct'); }}>Add-Product</button>}
+      {props.isLoggedIn && <button className="menu-button" onClick={() => { navigate('/cart'); }}>🛒</button>}
+      {props.isLoggedIn ? (
+        <button className="menu-button" onClick={() => {
+          dispatch({ type: 'logout' });
+          navigate('/');
+        }}>Logout</button>
+      ) : (
+        <Anchor className="menu-link" to="/login">Login</Anchor>
+      )}
+    </div>
+  );
+};
+
+export default function NavigationBar() {
+  const user = useSelector((state) => state.user);
+  const isLoggedIn = Object.keys(user).length !== 0;
+  const isAdmin = isLoggedIn && user?.account === "Admin";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  return (
+    <React.Fragment>
+      <div className="nav-bar">
+        <div className="toolbar">
+          <span className="logo" onClick={() => navigate("/")}>
+            <Logo />
+          </span>
+          <SearchBar isLoggedIn={isLoggedIn} dispatch={dispatch} />
+          <Menu isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+        </div>
+      </div>
+      <Outlet />
+    </React.Fragment>
   );
 }

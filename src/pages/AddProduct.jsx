@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+/*import React, {useEffect, useRef, useState} from 'react'
 import { apiConnector } from '../api calls/apiConnector';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -217,7 +217,6 @@ export const AddProduct = () => {
           <button type="submit" disabled={loading} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">{params?.productId ? "Edit Product" : "Add Product"}</button>
         </div>
         
-        {/* right part */}
         <div className='border-2 w-2/6 flex flex-col items-center bg-white shadow-lg gap-8 rounded-lg p-5 '>
           <div className='border-2 border-gray-400 mx-auto w-[250px] mt-5 h-[250px] rounded-md'>
             {preview ? <img src={preview} alt={"product"} className='w-[250px] h-[250px] rounded-md object-cover'/> : <div className='mt-5 text-center w-[250px] h-[250px] rounded-md'>Product Image</div>}
@@ -242,4 +241,88 @@ export const AddProduct = () => {
       </form>
     </div>
   )
+}*/
+import * as React from 'react';
+import { Link as Anchor, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+const Logo = () => {
+  return (
+    <React.Fragment>
+      <span className="logo-icon">🛒</span>
+      <span className="logo-text">ShopSpot</span>
+    </React.Fragment>
+  );
+};
+
+const SearchBar = (props) => {
+  return props.isLoggedIn ? (
+    <div className="search">
+      <span className="search-icon">🔍</span>
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search…"
+        onInput={(e) => {
+          props.dispatch({ type: 'setSearch', payload: e.currentTarget.value });
+        }}
+      />
+    </div>
+  ) : null;
+};
+
+const Menu = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedIn = props.isLoggedIn;
+  const isAdmin = props.isAdmin;
+
+  return (
+    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+      <li className="nav-item">
+        {isLoggedIn && <Anchor className="nav-link" to="/">Home</Anchor>}
+      </li>
+      {isAdmin && (
+        <li className="nav-item">
+          <Anchor className="nav-link" to="/addproduct">Add-Product</Anchor>
+        </li>
+      )}
+      <li className="nav-item">
+        {isLoggedIn && <Anchor className="nav-link" to="/cart">🛒</Anchor>}
+      </li>
+      <li className="nav-item">
+        {isLoggedIn ? (
+          <button className="nav-link" onClick={() => {
+            dispatch({ type: 'logout' });
+            navigate('/');
+          }}>Logout</button>
+        ) : (
+          <Anchor className="nav-link" to="/login">Login</Anchor>
+        )}
+      </li>
+    </ul>
+  );
+};
+export default function NavigationBar() {
+  const user = useSelector((state) => state.user);
+  const isLoggedIn = Object.keys(user).length !== 0;
+  const isAdmin = isLoggedIn && user?.account === "Admin";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <span className="navbar-brand" onClick={() => navigate("/")}>
+          <Logo />
+        </span>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <Menu isLoggedIn={isLoggedIn} isAdmin={isAdmin} />
+          <SearchBar isLoggedIn={isLoggedIn} dispatch={dispatch} />
+        </div>
+      </div>
+    </nav>
+  );
 }
